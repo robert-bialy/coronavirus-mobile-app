@@ -6,8 +6,7 @@ import 'package:provider/provider.dart';
 import '../bloc/app_state.dart';
 
 final String _description = "2019 Novel Coronavirus (2019-nCoV) is a virus (more specifically, a coronavirus) identified as the cause of an outbreak of respiratory illness first detected in Wuhan, China. Early on, many of the patients in the outbreak in Wuhan, China reportedly had some link to a large seafood and animal market, suggesting animal-to-person spread. However, a growing number of patients reportedly have not had exposure to animal markets, indicating person-to-person spread is occurring. At this time, it’s unclear how easily or sustainably this virus is spreading between people.";
-final String _about = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu volutpat purus. Vestibulum vehicula efficitur faucibus. Phasellus vulputate metus neque, eu pulvinar nisl imperdiet a. Pellentesque ut ultricies libero. Donec ut gravida leo. Aenean sit amet neque elementum, ultrices nunc ac, dignissim metus. In eget diam laoreet, luctus lorem vitae, pretium risus. Maecenas ligula diam, ullamcorper at dignissim eu, viverra sit amet risus. Praesent faucibus porta ultricies. Vivamus a odio sit amet est blandit facilisis. Phasellus tristique convallis nisl, quis vestibulum metus ullamcorper a. Donec non lorem enim. Donec fermentum in odio non varius. Cras vitae nulla vel urna consequat ullamcorper. Quisque sed fermentum magna. Donec auctor dui ut turpis venenatis, a sodales dui posuere.";
-
+final String _about = "This application is in beta! \n\This application was created to spread awarnes about Coronavirus. All data is based on informations provided by https://systems.jhu.edu/research/public-health/ncov/ \n\n Upcoming features: \n - infections per country \n - infections per state \n Stay tuned!";
 class DrawerItem {
   String title;
   IconData icon;
@@ -66,7 +65,7 @@ class HomePageState extends State<HomePage> {
             new UserAccountsDrawerHeader(
                 accountName: new Text("Coronavirus 2019-nCoV", style: TextStyle(fontSize: 20)),
                 accountEmail: Text("Time updated: " + DateFormat('dd.MM.yyyy kk:mm').format(_appState?.timeUpdated ?? DateTime.now())),
-                currentAccountPicture: Icon(Icons.help_outline),
+                currentAccountPicture: Icon(Icons.healing),
             ),
             new Column(children: drawerOptions)
           ],

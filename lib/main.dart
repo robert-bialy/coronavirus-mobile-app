@@ -1,5 +1,6 @@
 import 'package:coronavirus/bloc/app_state.dart';
 import 'package:coronavirus/bloc/repository.dart';
+import 'package:coronavirus/constants.dart';
 import 'package:coronavirus/pages/navigation_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,9 +13,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         brightness: Brightness.dark,
-        primarySwatch: Colors.purple
+        accentColor: Constants.violet
       ),
       home: ListenableProvider<AppState>(
         create: (_) => AppState(new Repository()),

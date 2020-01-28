@@ -17,7 +17,6 @@ class _ContentPageState extends State<ContentPage> {
         child: Text(
         widget.description,
             style: TextStyle(
-                fontFamily: "Roboto",
                 color: Colors.black,
                 fontSize: 16,
                 height: 1.5,
