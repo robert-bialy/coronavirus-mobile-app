@@ -4,7 +4,7 @@ import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 
 class AppState with ChangeNotifier {
-  DateTime timeUpdated;
+  DateTime timeUpdated = DateTime.now();
   IRepository _repository;
 
   AppState(IRepository repository) {
@@ -14,6 +14,8 @@ class AppState with ChangeNotifier {
   Future<InformationBlock> getData() async {
     timeUpdated = DateTime.now();
     String data = await _repository.getMostRecentData();
-    return InformationBlock.fromCsv(CsvToListConverter().convert(data));
+    var informationBlock = InformationBlock.fromCsv(CsvToListConverter().convert(data));
+    notifyListeners();
+    return informationBlock;
   }
 }
