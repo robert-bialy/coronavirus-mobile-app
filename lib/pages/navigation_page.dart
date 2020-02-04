@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '../bloc/app_state.dart';
 
 final String _description = "2019 Novel Coronavirus (2019-nCoV) is a virus (more specifically, a coronavirus) identified as the cause of an outbreak of respiratory illness first detected in Wuhan, China. Early on, many of the patients in the outbreak in Wuhan, China reportedly had some link to a large seafood and animal market, suggesting animal-to-person spread. However, a growing number of patients reportedly have not had exposure to animal markets, indicating person-to-person spread is occurring. At this time, it’s unclear how easily or sustainably this virus is spreading between people.";
-final String _about = "This application is in beta! \n\This application was created to spread awarnes about Coronavirus. All data is based on informations provided by https://systems.jhu.edu/research/public-health/ncov/ \n\n Upcoming features: \n - infections per country \n - infections per state \n Stay tuned!";
+final String _about = "This application is in beta! \nThis application was created to spread awarnes about Coronavirus. All data is based on informations provided by https://systems.jhu.edu/research/public-health/ncov/ \n\n Upcoming features: \n - infections per country \n - infections per state \n Stay tuned!";
 class DrawerItem {
   String title;
   IconData icon;

@@ -1,21 +1,21 @@
+import 'package:coronavirus/models/response_wrapper.dart';
 import 'package:http/http.dart';
 
 abstract class IRepository {
-  Future<String> getMostRecentData();
+  Future<ResponseWrapper<String>> getWorldSummary();
 }
 
 class Repository implements IRepository {
-  String url = 'https://docs.google.com/spreadsheet/ccc?key=1yZv9w9zRKwrGTaR-YzmAqMefw4wMlaXocejdxZaTs6w&output=csv';
+  String endpointAddress = 'https://coronavirusapi.herokuapp.com/';
 
   @override
-  Future<String> getMostRecentData() async {
+  Future<ResponseWrapper<String>> getWorldSummary() async {
     try{
-      Response response = await get(url);
-      return response.body;
-    } catch (ex) {
-      print(ex);
+      Response response = await get(endpointAddress + 'world');
+      return ResponseWrapper.withSuccess(response.body);
+    } on Exception catch(exception) {
+      return ResponseWrapper.withError(exception.toString());
     }
-    return null;
   }
 }
 

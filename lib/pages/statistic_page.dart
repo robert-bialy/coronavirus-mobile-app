@@ -16,7 +16,10 @@ class _StatisticPageState extends State<StatisticPage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if(_appState == null) _appState = Provider.of(context);
+    if(_appState == null) {
+      _appState = Provider.of(context);
+      _appState.getWorldSummaryData();
+    }
   }
 
   @override
@@ -25,20 +28,19 @@ class _StatisticPageState extends State<StatisticPage> {
       constraints: BoxConstraints.expand(),
       color: Colors.white,
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-        child: FutureBuilder<InformationBlock>(
-          future: _appState.getData(),
+        child: StreamBuilder<InformationBlock>(
+          stream: _appState.summary,
           builder: (context, snapshot) {
             if(snapshot.data != null) {
               return RefreshIndicator(
                 child: SingleChildScrollView(
                   physics: AlwaysScrollableScrollPhysics(),
-                  child: InformationBlockCard(informationBlock: snapshot.data, title: "Worldwide"),
-                ),
-                onRefresh: () => _appState.getData(),
+                  child: InformationBlockCard(informationBlock: snapshot.data, title: "Worldwide")),
+                onRefresh: () => _appState.getWorldSummaryData(),
                 color: Constants.violet,
               );
             }
-            return Center(child: CircularProgressIndicator(backgroundColor: Constants.violet));
+            return Center(child: CircularProgressIndicator());
           },
         ),
     );

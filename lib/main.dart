@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
         accentColor: Constants.violet
       ),
-      home: ListenableProvider<AppState>(
+      home: Provider<AppState>(
         create: (_) => AppState(new Repository()),
         child: HomePage(),
       ),

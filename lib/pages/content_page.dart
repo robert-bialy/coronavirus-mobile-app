@@ -5,7 +5,6 @@ class ContentPage extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() => _ContentPageState();
-
 }
 class _ContentPageState extends State<ContentPage> {
   @override
@@ -15,7 +14,7 @@ class _ContentPageState extends State<ContentPage> {
         color: Colors.white,
         padding: EdgeInsets.all(16),
         child: Text(
-        widget.description,
+            widget.description,
             style: TextStyle(
                 color: Colors.black,
                 fontSize: 16,
