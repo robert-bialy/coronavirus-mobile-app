@@ -20,13 +20,32 @@ class HomePage extends StatefulWidget {
     new DrawerItem("About app", Icons.help_outline)
   ];
 
+  final tabItems = [
+    Tab(text: 'Summary'),
+    Tab(text: 'Countries'),
+  ];
+
   @override
   State<StatefulWidget> createState() => HomePageState();
 }
 
-class HomePageState extends State<HomePage> {
+class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
   int _selectedDrawerIndex = 0;
+  TabController _tabController;
   AppState _appState;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(vsync: this, length: widget.tabItems.length);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _tabController.dispose();
+    _appState.dispose();
+  }
 
   @override
   void didChangeDependencies() {
@@ -36,7 +55,18 @@ class HomePageState extends State<HomePage> {
 
   _getDrawerItemWidget(int pos) {
     switch (pos) {
-      case 0: return new StatisticPage();
+      case 0: return new TabBarView(
+        controller: _tabController,
+        children: <Widget>[
+          StatisticPage(
+            getStreamInfo: () => _appState.getWorldSummaryData(),
+            informationBlockStream: _appState.summaryStream,
+            title: 'Summary'),
+          StatisticPage(
+              getStreamInfo: () =>  _appState.getPerCountryInformation(),
+              informationBlockStream: _appState.countriesStream)
+        ],
+      );
       case 1: return new ContentPage(description: _description);
       case 2: return new ContentPage(description: _about);
       default: return new Text("Error");
@@ -58,7 +88,12 @@ class HomePageState extends State<HomePage> {
       );
     }
     return new Scaffold(
-      appBar: new AppBar(title: new Text(widget.drawerItems[_selectedDrawerIndex].title)),
+      appBar: new AppBar(
+          title: new Text(widget.drawerItems[_selectedDrawerIndex].title),
+          bottom: _selectedDrawerIndex != 0
+              ? PreferredSize(child: Container())
+              : TabBar(controller: _tabController, tabs: widget.tabItems),
+      ),
       drawer: new Drawer(
         child: new Column(
           children: <Widget>[

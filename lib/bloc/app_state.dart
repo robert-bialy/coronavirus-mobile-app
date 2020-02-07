@@ -1,33 +1,44 @@
-import 'dart:convert';
+import 'dart:async';
 import 'package:coronavirus/bloc/repository.dart';
 import 'package:coronavirus/models/information_block.dart';
 import 'package:coronavirus/models/response_wrapper.dart';
 import 'package:rxdart/rxdart.dart';
 
 class AppState {
-  IRepository _repository;
-  BehaviorSubject<InformationBlock> _information;
-  Stream<InformationBlock> get summary => _information.stream;
-
   DateTime timeUpdated = DateTime.now();
 
+  IRepository _repository;
+  BehaviorSubject<List<InformationBlock>> _summarySubject;
+  BehaviorSubject<List<InformationBlock>> _countriesSubject;
+  Stream<List<InformationBlock>> get summaryStream => _summarySubject.stream;
+  Stream<List<InformationBlock>> get countriesStream => _countriesSubject.stream;
 
   AppState(IRepository repository) {
     _repository = repository;
-    _information = new BehaviorSubject<InformationBlock>();
+    _summarySubject = new BehaviorSubject<List<InformationBlock>>();
+    _countriesSubject = new BehaviorSubject<List<InformationBlock>>();
   }
 
   getWorldSummaryData() async {
     timeUpdated = DateTime.now();
-    ResponseWrapper<String> response = await _repository.getWorldSummary();
+    ResponseWrapper<InformationBlock> response = await  _repository.getWorldSummary();
     if(response.isSuccess) {
-      InformationBlock informationBlock = InformationBlock.fromJson(jsonDecode(response.message));
-      _information.add(informationBlock);
+      _summarySubject.add([response.message]);
     }
-    else _information.addError(response.error);
+    else _summarySubject.addError(response.error);
+  }
+
+  getPerCountryInformation() async {
+    timeUpdated = DateTime.now();
+    ResponseWrapper<List<InformationBlock>> response = await _repository.getPerCountrySummary();
+    if(response.isSuccess) {
+      _countriesSubject.add(response.message);
+    }
+    else _countriesSubject.addError(response.error);
   }
 
   void dispose() {
-    _information.close();
+    _summarySubject.close();
+    _countriesSubject.close();
   }
 }
